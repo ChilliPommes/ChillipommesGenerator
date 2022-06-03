@@ -15,7 +15,7 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
         {
             var filePayload = LoadFile(fileName);
 
-            var baseStructure = new BaseStructure();
+            var baseStructure = new ModelSchema();
 
             // Area of usings
             baseStructure.Usings = ParseUsings(filePayload);
@@ -92,9 +92,9 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             return interfaceName.Substring(1, interfaceName.Length - 1);
         }
 
-        private PropertyStructure[] ParseProperties(string payload)
+        private PropertySchema[] ParseProperties(string payload)
         {
-            List<PropertyStructure> propertyStructures = new List<PropertyStructure>();
+            List<PropertySchema> propertyStructures = new List<PropertySchema>();
 
             var beginOfClass = payload.IndexOf("{") + 1;
 
@@ -108,7 +108,7 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
 
             foreach(var fullProp in fullProps.Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)))
             {
-                var propertyStructure = new PropertyStructure();
+                var propertyStructure = new PropertySchema();
                 var propParts = fullProp.Substring(0, fullProp.IndexOf("{")).Split(" ").Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)).ToArray();
 
                 propertyStructure.Accessebility = propParts[0] switch
