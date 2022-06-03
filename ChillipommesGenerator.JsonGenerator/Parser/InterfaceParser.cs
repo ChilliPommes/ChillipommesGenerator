@@ -6,6 +6,13 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
 {
     public sealed class InterfaceParser : BaseParser
     {
+        private string domain = string.Empty;
+
+        public InterfaceParser(string domain)
+        {
+            this.domain = domain;
+        }
+
         /// <summary>
         /// Parses an C# Interface to the generator valid json format
         /// </summary>
@@ -15,24 +22,28 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
         {
             var filePayload = LoadFile(fileName);
 
-            var baseStructure = new BaseStructure();
+            var modelSchema = new ModelSchema();
 
-            // Area of usings
-            baseStructure.Usings = ParseUsings(filePayload);
+            var cSharpSchema = new CSharpSchema();
+            var classSchema = new ClassSchema();
 
-            // Area of Namespace
-            baseStructure.NameSpace = ParseNameSpace(filePayload);
+            modelSchema.CSharp = cSharpSchema;
 
-            // Area of Accessebility
-            baseStructure.Accessebility = ParseClassAccessebility(filePayload);
+            // Class Schema
+            classSchema.Usings = ParseUsings(filePayload);
+            classSchema.NameSpace = ParseNameSpace(filePayload);
+            classSchema.Accessebility = ParseClassAccessebility(filePayload);
+            classSchema.Title = ParseClassName(filePayload);
 
-            // Area of Class Name
-            baseStructure.ClassName = ParseClassName(filePayload);
+            modelSchema.Class = classSchema;
 
             // Area of Properties
-            baseStructure.Properties = ParseProperties(filePayload);
+            modelSchema.Properties = ParseProperties(filePayload);
 
-            return JsonSerializer.Serialize(baseStructure);
+            modelSchema.Id = modelSchema.Id.Replace("{name}", classSchema.Title);
+            modelSchema.Id = modelSchema.Id.Replace("{host}", domain);
+
+            return JsonSerializer.Serialize(modelSchema);
         }
 
         private string[] ParseUsings(string payload)
@@ -92,9 +103,9 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             return interfaceName.Substring(1, interfaceName.Length - 1);
         }
 
-        private PropertyStructure[] ParseProperties(string payload)
+        private List<PropertySchema> ParseProperties(string payload)
         {
-            List<PropertyStructure> propertyStructures = new List<PropertyStructure>();
+            List<PropertySchema> propertyStructures = new List<PropertySchema>();
 
             var beginOfClass = payload.IndexOf("{") + 1;
 
@@ -108,7 +119,7 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
 
             foreach(var fullProp in fullProps.Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)))
             {
-                var propertyStructure = new PropertyStructure();
+                var propertyStructure = new PropertySchema();
                 var propParts = fullProp.Substring(0, fullProp.IndexOf("{")).Split(" ").Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)).ToArray();
 
                 propertyStructure.Accessebility = propParts[0] switch
@@ -119,16 +130,16 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
                     _ => Accessebility.Public,
                 };
 
-                propertyStructure.PropertyName = propParts.Last();
+                propertyStructure.Title = propParts.Last();
 
-                propertyStructure.PropertyType = propParts.Length == 3 ? propParts[1] : propParts[propParts.Length - 2];
+                propertyStructure.Type = propParts.Length == 3 ? propParts[1] : propParts[propParts.Length - 2];
 
                 propertyStructure.Static = propParts.Any(x => x.Equals("static", StringComparison.OrdinalIgnoreCase));
 
                 propertyStructures.Add(propertyStructure);
             }
 
-            return propertyStructures.ToArray();
+            return propertyStructures;
         }
     }
 }

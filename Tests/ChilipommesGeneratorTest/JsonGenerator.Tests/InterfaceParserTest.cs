@@ -12,7 +12,7 @@ namespace ChilipommesGeneratorTest.JsonGenerator.Tests
 
             var fullPath = Path.Combine(path, fileName);
 
-            var ip = new InterfaceParser();
+            var ip = new InterfaceParser("test.de");
 
             var output = ip.Parse(fullPath);
 
