@@ -15,24 +15,23 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
         {
             var filePayload = LoadFile(fileName);
 
-            var baseStructure = new ModelSchema();
+            var modelSchema = new ModelSchema();
 
-            //// Area of usings
-            //baseStructure.Usings = ParseUsings(filePayload);
+            var cSharpSchema = new CSharpSchema();
+            var classSchema = new ClassSchema();
 
-            //// Area of Namespace
-            //baseStructure.NameSpace = ParseNameSpace(filePayload);
+            modelSchema.CSharp = cSharpSchema;
 
-            //// Area of Accessebility
-            //baseStructure.Accessebility = ParseClassAccessebility(filePayload);
+            // Class Schema
+            classSchema.Usings = ParseUsings(filePayload);
+            classSchema.NameSpace = ParseNameSpace(filePayload);
+            classSchema.Accessebility = ParseClassAccessebility(filePayload);
+            classSchema.Title = ParseClassName(filePayload);
 
-            //// Area of Class Name
-            //baseStructure.ClassName = ParseClassName(filePayload);
+            // Area of Properties
+            modelSchema.Properties = ParseProperties(filePayload);
 
-            //// Area of Properties
-            //baseStructure.Properties = ParseProperties(filePayload);
-
-            return JsonSerializer.Serialize(baseStructure);
+            return JsonSerializer.Serialize(modelSchema);
         }
 
         private string[] ParseUsings(string payload)
@@ -92,9 +91,9 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             return interfaceName.Substring(1, interfaceName.Length - 1);
         }
 
-        private PropertySchema[] ParseProperties(string payload)
+        private List<KeyValuePair<string, PropertySchema>> ParseProperties(string payload)
         {
-            List<PropertySchema> propertyStructures = new List<PropertySchema>();
+            List<KeyValuePair<string, PropertySchema>> propertyStructures = new List<KeyValuePair<string, PropertySchema>>();
 
             var beginOfClass = payload.IndexOf("{") + 1;
 
@@ -119,16 +118,16 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
                     _ => Accessebility.Public,
                 };
 
-                propertyStructure.Name = propParts.Last();
+                propertyStructure.Title = propParts.Last();
 
                 propertyStructure.Type = propParts.Length == 3 ? propParts[1] : propParts[propParts.Length - 2];
 
                 propertyStructure.Static = propParts.Any(x => x.Equals("static", StringComparison.OrdinalIgnoreCase));
 
-                propertyStructures.Add(propertyStructure);
+                propertyStructures.Add(new KeyValuePair<string, PropertySchema>(propertyStructure.Title, propertyStructure));
             }
 
-            return propertyStructures.ToArray();
+            return propertyStructures;
         }
     }
 }
