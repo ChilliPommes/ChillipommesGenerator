@@ -24,7 +24,7 @@ namespace ChillipommesGenerator.JsonGenerator.Models
         /// KeyValue List of string (prop name) and <see cref="PropertySchema"/> to display all properties
         /// </summary>
         [JsonPropertyName("properties")]
-        public List<KeyValuePair<string, PropertySchema>>? Properties { get; set; }
+        public List<PropertySchema>? Properties { get; set; }
 
         /// <summary>
         /// List of properties which are set as required
