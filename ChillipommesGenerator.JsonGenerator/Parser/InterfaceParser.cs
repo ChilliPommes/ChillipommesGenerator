@@ -41,6 +41,7 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             modelSchema.Properties = ParseProperties(filePayload);
 
             modelSchema.Id = modelSchema.Id.Replace("{name}", classSchema.Title);
+            modelSchema.Id = modelSchema.Id.Replace("{host}", domain);
 
             return JsonSerializer.Serialize(modelSchema);
         }
