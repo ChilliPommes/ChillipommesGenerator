@@ -119,9 +119,9 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
                     _ => Accessebility.Public,
                 };
 
-                propertyStructure.PropertyName = propParts.Last();
+                propertyStructure.Name = propParts.Last();
 
-                propertyStructure.PropertyType = propParts.Length == 3 ? propParts[1] : propParts[propParts.Length - 2];
+                propertyStructure.Type = propParts.Length == 3 ? propParts[1] : propParts[propParts.Length - 2];
 
                 propertyStructure.Static = propParts.Any(x => x.Equals("static", StringComparison.OrdinalIgnoreCase));
 
