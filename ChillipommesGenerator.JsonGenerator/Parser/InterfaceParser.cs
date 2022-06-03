@@ -1,4 +1,5 @@
 ﻿using ChillipommesGenerator.Core.Enums;
+using ChillipommesGenerator.JsonGenerator.Converter;
 using ChillipommesGenerator.JsonGenerator.Models;
 using System.Text.Json;
 
@@ -43,7 +44,16 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             modelSchema.Id = modelSchema.Id.Replace("{name}", classSchema.Title);
             modelSchema.Id = modelSchema.Id.Replace("{host}", domain);
 
-            return JsonSerializer.Serialize(modelSchema);
+            var serializeOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Converters =
+                {
+                    new PropertySchemaJsonConverter()
+                }
+            };
+
+            return JsonSerializer.Serialize(modelSchema, serializeOptions);
         }
 
         private string[] ParseUsings(string payload)
@@ -51,11 +61,11 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             List<string> usings = new List<string>();
 
             var endOfUsings = payload.IndexOf("namespace");
-            var substring = payload.Substring(0, endOfUsings).Replace("\r", "").Replace("\n","");
+            var substring = payload.Substring(0, endOfUsings).Replace("\r", "").Replace("\n", "");
 
             var fullUsings = substring.Split(";");
 
-            foreach(var fullUsing in fullUsings.Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)))
+            foreach (var fullUsing in fullUsings.Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)))
             {
                 var splittedUsing = fullUsing.Split(" ");
                 usings.Add(splittedUsing[1]);
@@ -75,13 +85,13 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
         private Accessebility ParseClassAccessebility(string payload)
         {
             var beginOfClass = payload.IndexOf("{") + 1;
-            
+
             var substring = payload.Substring(beginOfClass);
             var beginOfProps = substring.IndexOf("{");
 
             var classString = substring.Substring(0, beginOfProps).Replace("\r", "").Replace("\n", "").Trim();
 
-            switch(classString.Split(" ")[0])
+            switch (classString.Split(" ")[0])
             {
                 case "private": return Accessebility.Private;
                 case "protected": return Accessebility.Protected;
@@ -117,7 +127,7 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
 
             var fullProps = propSubstring.Split("}");
 
-            foreach(var fullProp in fullProps.Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)))
+            foreach (var fullProp in fullProps.Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)))
             {
                 var propertyStructure = new PropertySchema();
                 var propParts = fullProp.Substring(0, fullProp.IndexOf("{")).Split(" ").Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)).ToArray();
