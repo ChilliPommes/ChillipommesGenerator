@@ -11,8 +11,8 @@ namespace ChillipommesGenerator.JsonGenerator.Models
         /// <summary>
         /// Name of the property
         /// </summary>
-        [JsonPropertyName("name")]
-        public string Name { get; set; } = string.Empty;
+        [JsonPropertyName("title")]
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// Type of the property
