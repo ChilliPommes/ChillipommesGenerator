@@ -1,0 +1,8 @@
+.vs/
+ChillipommesGenerator.Core/bin/
+ChillipommesGenerator.Core/obj/
+ChillipommesGenerator.JsonGenerator/bin/
+ChillipommesGenerator.JsonGenerator/obj/
+ChillipommesGenerator/obj/
+Tests/ChilipommesGeneratorTest/bin/
+Tests/ChilipommesGeneratorTest/obj/
