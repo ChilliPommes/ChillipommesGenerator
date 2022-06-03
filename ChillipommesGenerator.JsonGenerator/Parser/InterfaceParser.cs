@@ -17,20 +17,20 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
 
             var baseStructure = new ModelSchema();
 
-            // Area of usings
-            baseStructure.Usings = ParseUsings(filePayload);
+            //// Area of usings
+            //baseStructure.Usings = ParseUsings(filePayload);
 
-            // Area of Namespace
-            baseStructure.NameSpace = ParseNameSpace(filePayload);
+            //// Area of Namespace
+            //baseStructure.NameSpace = ParseNameSpace(filePayload);
 
-            // Area of Accessebility
-            baseStructure.Accessebility = ParseClassAccessebility(filePayload);
+            //// Area of Accessebility
+            //baseStructure.Accessebility = ParseClassAccessebility(filePayload);
 
-            // Area of Class Name
-            baseStructure.ClassName = ParseClassName(filePayload);
+            //// Area of Class Name
+            //baseStructure.ClassName = ParseClassName(filePayload);
 
-            // Area of Properties
-            baseStructure.Properties = ParseProperties(filePayload);
+            //// Area of Properties
+            //baseStructure.Properties = ParseProperties(filePayload);
 
             return JsonSerializer.Serialize(baseStructure);
         }
