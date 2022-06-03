@@ -49,7 +49,8 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
                 WriteIndented = true,
                 Converters =
                 {
-                    new PropertySchemaJsonConverter()
+                    new PropertySchemaJsonConverter(),
+                    new PropertySchemaListJsonConverter()
                 }
             };
 
