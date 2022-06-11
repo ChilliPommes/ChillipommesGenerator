@@ -14,6 +14,22 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             this.domain = domain;
         }
 
+        public void ParseJson(string fullPath)
+        {
+            var json = LoadFile(fullPath);
+
+            var desiralizeOptions = new JsonSerializerOptions()
+            {
+                //Converters =
+                //{
+                //    new PropertySchemaJsonConverter(),
+                //    new PropertySchemaListJsonConverter()
+                //}
+            };
+
+            var obj = JsonSerializer.Deserialize<ModelSchema>(json, desiralizeOptions);
+        }
+
         /// <summary>
         /// Parses an C# Interface to the generator valid json format
         /// </summary>
@@ -46,7 +62,6 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
 
             var serializeOptions = new JsonSerializerOptions
             {
-                WriteIndented = true,
                 Converters =
                 {
                     new PropertySchemaJsonConverter(),

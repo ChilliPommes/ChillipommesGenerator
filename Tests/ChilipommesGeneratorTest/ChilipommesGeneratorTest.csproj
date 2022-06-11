@@ -13,7 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\TestJson.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Resources\ITestInterface.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\TestJson.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

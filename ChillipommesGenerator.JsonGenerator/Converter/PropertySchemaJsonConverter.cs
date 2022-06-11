@@ -10,7 +10,12 @@ namespace ChillipommesGenerator.JsonGenerator.Converter
     {
         public override PropertySchema? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException();
+            }
+
+            return JsonSerializer.Deserialize<PropertySchema>(ref reader);
         }
 
         public override void Write(Utf8JsonWriter writer, PropertySchema value, JsonSerializerOptions options)

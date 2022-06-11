@@ -8,7 +8,35 @@ namespace ChillipommesGenerator.JsonGenerator.Converter
     {
         public override List<PropertySchema>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException();
+            }
+
+            var resultList = new List<PropertySchema>();
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                    return resultList;
+
+                var deserializeOptions = new JsonSerializerOptions
+                {
+                    Converters =
+                    {
+                        new PropertySchemaJsonConverter()
+                    }
+                };
+
+                var schema = JsonSerializer.Deserialize<PropertySchema>(ref reader, deserializeOptions);
+
+                if (schema != null)
+                {
+                    resultList.Add(schema);
+                }
+            }
+
+            throw new JsonException();
         }
 
         public override void Write(Utf8JsonWriter writer, List<PropertySchema> value, JsonSerializerOptions options)
@@ -19,7 +47,6 @@ namespace ChillipommesGenerator.JsonGenerator.Converter
             {
                 var serializeOptions = new JsonSerializerOptions
                 {
-                    WriteIndented = true,
                     Converters =
                     {
                         new PropertySchemaJsonConverter()

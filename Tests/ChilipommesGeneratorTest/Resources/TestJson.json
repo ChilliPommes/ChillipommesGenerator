@@ -1,0 +1,59 @@
+{
+  "class": {
+    "title": "TestInterface",
+    "description": "",
+    "nameSpace": "ChillipommesGenerator.JsonGenerator.Resources",
+    "usings": [
+      "System.Text.Json"
+    ],
+    "accessebility": 0
+  },
+  "cSharp": {
+    "sealed": false,
+    "static": false,
+    "inheritFromClass": "",
+    "inheritFromInterfaces": [
+    ]
+  },
+  "properties": {
+    "foo": {
+      "title": "Foo",
+      "type": "bool",
+      "description": "",
+      "accessebility": 0,
+      "minValue": 0,
+      "maxValue": 0,
+      "static": false,
+      "required": false,
+      "nullable": false
+    },
+    "bar": {
+      "title": "Bar",
+      "type": "List\u003Cstring\u003E",
+      "description": "",
+      "accessebility": 0,
+      "minValue": 0,
+      "maxValue": 0,
+      "static": false,
+      "required": false,
+      "nullable": false
+    },
+    "amount": {
+      "title": "Amount",
+      "type": "double",
+      "description": "",
+      "accessebility": 0,
+      "minValue": 0,
+      "maxValue": 0,
+      "static": false,
+      "required": false,
+      "nullable": false
+    }
+  },
+  "required": null,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://test.de/TestInterface.schema.json",
+  "title": "",
+  "description": "",
+  "type": "object"
+}
