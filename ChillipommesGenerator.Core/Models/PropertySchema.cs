@@ -1,12 +1,12 @@
 ﻿using ChillipommesGenerator.Core.Enums;
 using System.Text.Json.Serialization;
 
-namespace ChillipommesGenerator.JsonGenerator.Models
+namespace ChillipommesGenerator.Core.Models
 {
     /// <summary>
     /// Class to define the schema of a property entry in JSON Schema
     /// </summary>
-    internal class PropertySchema
+    public class PropertySchema
     {
         /// <summary>
         /// Name of the property
@@ -61,5 +61,11 @@ namespace ChillipommesGenerator.JsonGenerator.Models
         /// </summary>
         [JsonPropertyName("nullable")]
         public bool Nullable { get; set; }
+
+        /// <summary>
+        /// Stores information about attributes which are atteched to the property
+        /// </summary>
+        [JsonPropertyName("attributes")]
+        public List<string>? Attributes { get; set; }
     }
 }

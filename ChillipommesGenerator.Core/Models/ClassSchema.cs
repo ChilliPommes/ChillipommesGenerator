@@ -1,13 +1,15 @@
 ﻿using ChillipommesGenerator.Core.Enums;
 using System.Text.Json.Serialization;
 
-namespace ChillipommesGenerator.JsonGenerator.Models
+namespace ChillipommesGenerator.Core.Models
 {
     /// <summary>
     /// Class to define Schema of the class structure
     /// </summary>
-    internal class ClassSchema
+    public class ClassSchema
     {
+        // TODO Namespace and Usings into csharp and java
+
         /// <summary>
         /// Inherits the class name of the projected class
         /// </summary>
@@ -19,18 +21,6 @@ namespace ChillipommesGenerator.JsonGenerator.Models
         /// </summary>
         [JsonPropertyName("description")]
         public string Description { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Namespace used by the class
-        /// </summary>
-        [JsonPropertyName("nameSpace")]
-        public string NameSpace { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Imports / Usings of the class
-        /// </summary>
-        [JsonPropertyName("usings")]
-        public string[] Usings { get; set; } = Array.Empty<string>();
 
         /// <summary>
         /// Accessebility of the class e.g. private

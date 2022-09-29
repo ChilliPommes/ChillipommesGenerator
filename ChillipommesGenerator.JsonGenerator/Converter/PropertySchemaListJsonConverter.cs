@@ -1,4 +1,4 @@
-﻿using ChillipommesGenerator.JsonGenerator.Models;
+﻿using ChillipommesGenerator.Core.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 

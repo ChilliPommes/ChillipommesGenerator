@@ -1,4 +1,5 @@
 ﻿using ChillipommesGenerator.JsonGenerator.Parser;
+using System.Text;
 using System.Text.Json;
 
 namespace ChilipommesGeneratorTest.JsonGenerator.Tests
@@ -17,6 +18,12 @@ namespace ChilipommesGeneratorTest.JsonGenerator.Tests
 
             var output = ip.Parse(fullPath);
 
+            using(var fs = File.Create("TestJson.json"))
+            {
+                fs.Write(Encoding.UTF8.GetBytes(output));
+                fs.Flush();
+            }
+
             Assert.IsNotEmpty(output);
         }
 
@@ -29,7 +36,9 @@ namespace ChilipommesGeneratorTest.JsonGenerator.Tests
             var fullPath = Path.Combine(path, fileName);
 
             var ip = new InterfaceParser("test.de");
-            ip.ParseJson(fullPath);
+            var output = ip.ParseJson(fullPath);
+
+            Assert.IsNotNull(output);
 
         }
     }

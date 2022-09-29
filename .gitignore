@@ -7,3 +7,5 @@ ChillipommesGenerator/obj/
 Tests/ChilipommesGeneratorTest/bin/
 Tests/ChilipommesGeneratorTest/obj/
 ChillipommesGenerator/bin/
+ChillipommesGenerator.CSharpGenerator/bin/
+ChillipommesGenerator.CSharpGenerator/obj/

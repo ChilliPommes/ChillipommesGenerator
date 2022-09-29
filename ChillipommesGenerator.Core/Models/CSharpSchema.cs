@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ChillipommesGenerator.JsonGenerator.Models
+namespace ChillipommesGenerator.Core.Models
 {
     /// <summary>
     /// Class to define the Schema for C-Sharp specific data properties and layouts
     /// </summary>
-    internal class CSharpSchema
+    public class CSharpSchema
     {
         /// <summary>
         /// Determines if the class is sealed
@@ -30,5 +30,17 @@ namespace ChillipommesGenerator.JsonGenerator.Models
         /// </summary>
         [JsonPropertyName("inheritFromInterfaces")]
         public string[] InheritFromInterfaces { get; set; } = Array.Empty<string>();
+
+        /// <summary>
+        /// Namespace used by the class
+        /// </summary>
+        [JsonPropertyName("nameSpace")]
+        public string NameSpace { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Imports / Usings of the class
+        /// </summary>
+        [JsonPropertyName("usings")]
+        public string[] Usings { get; set; } = Array.Empty<string>();
     }
 }

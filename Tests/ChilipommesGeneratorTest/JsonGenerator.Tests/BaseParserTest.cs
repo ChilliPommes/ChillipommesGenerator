@@ -1,9 +1,4 @@
-﻿using ChillipommesGenerator.JsonGenerator.Parser;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChillipommesGenerator.Core.Parser;
 
 namespace ChilipommesGeneratorTest.JsonGenerator.Tests
 {

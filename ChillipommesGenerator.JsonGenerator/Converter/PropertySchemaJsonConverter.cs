@@ -1,6 +1,6 @@
 ﻿using ChillipommesGenerator.Core.Enums;
+using ChillipommesGenerator.Core.Models;
 using ChillipommesGenerator.JsonGenerator.Helper;
-using ChillipommesGenerator.JsonGenerator.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -86,6 +86,10 @@ namespace ChillipommesGenerator.JsonGenerator.Converter
                 else if (property.GetValue(value)!.GetType() == typeof(Accessebility))
                 {
                     writer.WriteNumberValue((int)property.GetValue(value)!);
+                }
+                else if (property.GetValue(value)!.GetType().IsGenericType && (property.GetValue(value)!.GetType().GetGenericTypeDefinition() == typeof(List<>)))
+                {
+                    writer.WriteRawValue(JsonSerializer.Serialize(property.GetValue(value)));
                 }
                 else
                 {

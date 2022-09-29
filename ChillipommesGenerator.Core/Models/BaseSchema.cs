@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ChillipommesGenerator.JsonGenerator.Models
+namespace ChillipommesGenerator.Core.Models
 {
-    internal class BaseSchema
+    public class BaseSchema
     {
         /// <summary>
         /// Schema on which the JSON structure is based

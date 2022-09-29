@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ChillipommesGenerator.JsonGenerator.Models
+namespace ChillipommesGenerator.Core.Models
 {
     /// <summary>
     /// Inherits BaseSchema class to impl. based structures of JSON Schema.
     /// This class adds additional information about the object used for the source generation.
     /// </summary>
-    internal class ModelSchema : BaseSchema
+    public class ModelSchema : BaseSchema
     {
         /// <summary>
         /// Class as ClassSchema to define the strucuter of the unlaying class

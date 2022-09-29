@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace ChillipommesGenerator.JsonGenerator.Parser
+namespace ChillipommesGenerator.Core.Parser
 {
     public class BaseParser
     {

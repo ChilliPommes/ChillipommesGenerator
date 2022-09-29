@@ -1,6 +1,7 @@
 ﻿using ChillipommesGenerator.Core.Enums;
+using ChillipommesGenerator.Core.Models;
+using ChillipommesGenerator.Core.Parser;
 using ChillipommesGenerator.JsonGenerator.Converter;
-using ChillipommesGenerator.JsonGenerator.Models;
 using System.Text.Json;
 
 namespace ChillipommesGenerator.JsonGenerator.Parser
@@ -14,20 +15,23 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             this.domain = domain;
         }
 
-        public void ParseJson(string fullPath)
+        public ModelSchema? ParseJson(string fullPath)
         {
             var json = LoadFile(fullPath);
 
+            json = json.Trim();
+
             var desiralizeOptions = new JsonSerializerOptions()
             {
-                //Converters =
-                //{
-                //    new PropertySchemaJsonConverter(),
-                //    new PropertySchemaListJsonConverter()
-                //}
+                Converters =
+                {
+                    new ModelSchemaJsonConverter(),
+                    new PropertySchemaJsonConverter(),
+                    new PropertySchemaListJsonConverter()
+                }
             };
 
-            var obj = JsonSerializer.Deserialize<ModelSchema>(json, desiralizeOptions);
+            return JsonSerializer.Deserialize<ModelSchema>(json, desiralizeOptions);
         }
 
         /// <summary>
@@ -47,8 +51,9 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             modelSchema.CSharp = cSharpSchema;
 
             // Class Schema
-            classSchema.Usings = ParseUsings(filePayload);
-            classSchema.NameSpace = ParseNameSpace(filePayload);
+            cSharpSchema.Usings = ParseUsings(filePayload);
+            cSharpSchema.NameSpace = ParseNameSpace(filePayload);
+
             classSchema.Accessebility = ParseClassAccessebility(filePayload);
             classSchema.Title = ParseClassName(filePayload);
 
@@ -64,6 +69,7 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             {
                 Converters =
                 {
+                    new ModelSchemaJsonConverter(),
                     new PropertySchemaJsonConverter(),
                     new PropertySchemaListJsonConverter()
                 }
@@ -146,8 +152,12 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
             foreach (var fullProp in fullProps.Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)))
             {
                 var propertyStructure = new PropertySchema();
-                var propParts = fullProp.Substring(0, fullProp.IndexOf("{")).Split(" ").Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)).ToArray();
 
+                var attributeParts = fullProp.Substring(0, fullProp.LastIndexOf("]")).Trim().Split("]").ToArray();
+                var propParts = fullProp.Substring(fullProp.LastIndexOf("]") + 1, fullProp.IndexOf("{") - fullProp.LastIndexOf("]") - 1)
+                    .Split(" ").Where(x => !string.IsNullOrEmpty(x) && !string.IsNullOrWhiteSpace(x)).ToArray();
+
+                propertyStructure.Attributes = new List<string>();
                 propertyStructure.Accessebility = propParts[0] switch
                 {
                     "private" => Accessebility.Private,
@@ -161,6 +171,9 @@ namespace ChillipommesGenerator.JsonGenerator.Parser
                 propertyStructure.Type = propParts.Length == 3 ? propParts[1] : propParts[propParts.Length - 2];
 
                 propertyStructure.Static = propParts.Any(x => x.Equals("static", StringComparison.OrdinalIgnoreCase));
+
+                // Test purpose "[DataMember(Name = \"member\")]"
+                
 
                 propertyStructures.Add(propertyStructure);
             }

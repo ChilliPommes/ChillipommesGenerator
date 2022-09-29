@@ -13,10 +13,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\EmptyClass.txt" />
+    <None Remove="Resources\EmptyProperty.txt" />
     <None Remove="Resources\TestJson.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\EmptyClass.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\EmptyProperty.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\ITestInterface.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -34,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ChillipommesGenerator.CSharpGenerator\ChillipommesGenerator.CSharpGenerator.csproj" />
     <ProjectReference Include="..\..\ChillipommesGenerator.JsonGenerator\ChillipommesGenerator.JsonGenerator.csproj" />
   </ItemGroup>
 

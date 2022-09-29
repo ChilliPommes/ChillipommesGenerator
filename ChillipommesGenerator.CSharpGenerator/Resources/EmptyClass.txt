@@ -1,0 +1,9 @@
+﻿{{Usings}}
+
+namespace {{Namespace}}
+{
+    {{ClassVisibility}} class {{ClassName}}
+    {
+        {{Properties}}
+    }
+}

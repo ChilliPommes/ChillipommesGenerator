@@ -1,20 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <None Remove="Resources\EmptyClass.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\EmptyClass.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChillipommesGenerator.Core\ChillipommesGenerator.Core.csproj" />
-    <ProjectReference Include="..\ChillipommesGenerator.CSharpGenerator\ChillipommesGenerator.CSharpGenerator.csproj" />
-    <ProjectReference Include="..\ChillipommesGenerator.JsonGenerator\ChillipommesGenerator.JsonGenerator.csproj" />
   </ItemGroup>
 
 </Project>
